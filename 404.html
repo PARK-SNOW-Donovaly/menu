@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+
+  <title>Stránka sa nenašla · PARK SNOW Donovaly</title>
+
+  <link
+    rel="stylesheet"
+    href="https://use.typekit.net/fjd7ksp.css"
+  >
+
+  <link id="shared-style" rel="stylesheet">
+  <link id="page-style" rel="stylesheet">
+
+  <script>
+    (() => {
+      const repositoryName = "MenuWeb";
+
+      const onGitHubPages =
+        location.hostname.endsWith(".github.io");
+
+      const siteRoot = onGitHubPages
+        ? "/" + repositoryName + "/"
+        : "/";
+
+      window.PARKSNOW_SITE_ROOT = siteRoot;
+
+      document.getElementById("shared-style").href =
+        siteRoot + "shared/style.css";
+
+      document.getElementById("page-style").href =
+        siteRoot + "404.css";
+
+      const modes = ["system", "light", "dark"];
+      const media = window.matchMedia(
+        "(prefers-color-scheme: dark)"
+      );
+
+      let mode = "system";
+
+      try {
+        const saved = localStorage.getItem("yeti-theme");
+
+        if (modes.includes(saved)) {
+          mode = saved;
+        }
+      } catch {}
+
+      const resolved = mode === "system"
+        ? (media.matches ? "dark" : "light")
+        : mode;
+
+      document.documentElement.dataset.theme = resolved;
+      document.documentElement.style.colorScheme = resolved;
+
+      const meta = document.querySelector(
+        'meta[name="theme-color"]'
+      );
+
+      if (meta) {
+        meta.content = resolved === "dark"
+          ? "#071b2b"
+          : "#ffffff";
+      }
+    })();
+  </script>
+</head>
+
+<body data-page="404">
+  <a class="skip-link" href="#content">
+    Prejsť na obsah
+  </a>
+
+  <header class="site-header container">
+    <a
+      id="brand-link"
+      class="brand"
+      href="/"
+      aria-label="PARK SNOW Donovaly – úvod"
+    >
+      <img
+        id="page-logo"
+        data-logo
+        src=""
+        alt="PARK SNOW Donovaly"
+        hidden
+      >
+
+      <span
+        id="brand-fallback"
+        class="brand-fallback"
+      >
+        <small>PARK SNOW</small>
+        <strong>Donovaly</strong>
+      </span>
+    </a>
+
+    <div class="header-actions">
+      <span class="venue-tag">
+        CHYBA 404
+      </span>
+
+      <button
+        id="theme-toggle"
+        class="theme-toggle"
+        type="button"
+        data-theme-toggle
+        hidden
+      >
+        <span
+          class="theme-icon"
+          aria-hidden="true"
+        >
+          ◐
+        </span>
+
+        <span class="theme-label">
+          Automaticky
+        </span>
+      </button>
+    </div>
+  </header>
+
+  <main id="content" class="page-main container">
+    <section
+      class="error-panel"
+      aria-labelledby="error-title"
+    >
+      <div class="error-copy">
+        <p class="eyebrow">
+          PARK SNOW DONOVALY · CHYBA 404
+        </p>
+
+        <h1 id="error-title">
+          Toto menu sme nenašli.
+        </h1>
+
+        <p class="error-description">
+          Odkaz už nemusí byť platný alebo bola adresa
+          napísaná nesprávne.
+        </p>
+
+        <div class="error-actions">
+          <a
+            id="home-link"
+            class="primary-link"
+            href="/"
+          >
+            Späť na výber prevádzky
+
+            <svg
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path d="M5 12H19"></path>
+              <path d="M13 6L19 12L13 18"></path>
+            </svg>
+          </a>
+
+          <a
+            class="secondary-link"
+            href="https://parksnow.sk"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            parksnow.sk
+            <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </div>
+
+      <div
+        class="error-visual"
+        aria-hidden="true"
+      >
+        <span class="error-number">404</span>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer container">
+    <p>
+      © <span id="home-year">2026</span>
+      PARK SNOW Donovaly ·
+      Web vytvoril <strong>Timotej Kozaňák</strong>
+    </p>
+
+    <span class="venue-tag">
+      DOBRÚ CHUŤ!
+    </span>
+  </footer>
+
+  <script>
+    (() => {
+      const root =
+        window.PARKSNOW_SITE_ROOT || "/";
+
+      const modes = [
+        "system",
+        "light",
+        "dark"
+      ];
+
+      const labels = {
+        system: "Automaticky",
+        light: "Svetlý",
+        dark: "Tmavý"
+      };
+
+      const icons = {
+        system: "◐",
+        light: "☀",
+        dark: "☾"
+      };
+
+      const html = document.documentElement;
+
+      const media = window.matchMedia(
+        "(prefers-color-scheme: dark)"
+      );
+
+      const meta = document.querySelector(
+        'meta[name="theme-color"]'
+      );
+
+      const brandLink =
+        document.getElementById("brand-link");
+
+      const homeLink =
+        document.getElementById("home-link");
+
+      const logo =
+        document.getElementById("page-logo");
+
+      const fallback =
+        document.getElementById("brand-fallback");
+
+      const themeButton =
+        document.getElementById("theme-toggle");
+
+      const themeIcon =
+        themeButton.querySelector(".theme-icon");
+
+      const themeLabel =
+        themeButton.querySelector(".theme-label");
+
+      function readMode() {
+        try {
+          const saved =
+            localStorage.getItem("yeti-theme");
+
+          if (modes.includes(saved)) {
+            return saved;
+          }
+        } catch {}
+
+        return "system";
+      }
+
+      let mode = readMode();
+
+      function showLogo() {
+        const loaded = Boolean(logo.naturalWidth);
+
+        logo.hidden = !loaded;
+        fallback.hidden = loaded;
+      }
+
+      logo.addEventListener("load", showLogo);
+
+      logo.addEventListener("error", () => {
+        logo.hidden = true;
+        fallback.hidden = false;
+      });
+
+      function applyTheme() {
+        const resolved = mode === "system"
+          ? (media.matches ? "dark" : "light")
+          : mode;
+
+        html.dataset.theme = resolved;
+        html.style.colorScheme = resolved;
+
+        if (meta) {
+          meta.content = resolved === "dark"
+            ? "#071b2b"
+            : "#ffffff";
+        }
+
+        const logoSource = resolved === "dark"
+          ? root + "assets/parksnow-logo-dark.svg"
+          : root + "assets/parksnow-logo.svg";
+
+        if (logo.getAttribute("src") !== logoSource) {
+          logo.src = logoSource;
+        }
+
+        const next =
+          modes[(modes.indexOf(mode) + 1) % modes.length];
+
+        themeIcon.textContent = icons[mode];
+        themeLabel.textContent = labels[mode];
+
+        themeButton.setAttribute(
+          "aria-label",
+          "Vzhľad: " + labels[mode] +
+          ". Prepnúť na: " + labels[next]
+        );
+
+        themeButton.hidden = false;
+
+        if (logo.complete) {
+          showLogo();
+        }
+      }
+
+      brandLink.href = root;
+      homeLink.href = root;
+
+      themeButton.addEventListener("click", () => {
+        mode =
+          modes[(modes.indexOf(mode) + 1) % modes.length];
+
+        try {
+          localStorage.setItem("yeti-theme", mode);
+        } catch {}
+
+        applyTheme();
+      });
+
+      media.addEventListener("change", () => {
+        if (mode === "system") {
+          applyTheme();
+        }
+      });
+
+      window.addEventListener("storage", event => {
+        if (
+          event.key !== "yeti-theme" &&
+          event.key !== null
+        ) {
+          return;
+        }
+
+        mode = modes.includes(event.newValue)
+          ? event.newValue
+          : "system";
+
+        applyTheme();
+      });
+
+      document.getElementById("home-year").textContent =
+        new Date().getFullYear();
+
+      applyTheme();
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <title>Menu · PARK SNOW Donovaly</title>
+
+  <script src="config.js?v=20260920"></script>
+  <script src="../shared/texts.js"></script>
+  <script src="../shared/app.js?v=20260920"></script>
+
+  <link rel="stylesheet" href="../shared/style.css?v=20260920">
+
+  <script src="menu-data.js?v=20260920" defer></script>
+</head>
+
+<body data-page="menu">
+  <a class="skip-link" href="#content" data-copy="skip">
+    Prejsť na obsah
+  </a>
+
+  <header class="site-header container">
+    <a class="brand" href="./" aria-label="PARK SNOW · Home">
+      <img
+        data-logo
+        src="../assets/parksnow-logo.svg"
+        alt="PARK SNOW Donovaly"
+        hidden
+      >
+
+      <span class="brand-fallback">
+        <small>PARK SNOW</small>
+        <strong>Donovaly</strong>
+      </span>
+    </a>
+
+    <div class="header-actions">
+      <span class="venue-tag" data-venue>MENU</span>
+
+      <label class="sr-only" for="language" data-copy="language">
+        Jazyk
+      </label>
+
+      <select id="language">
+        <option value="sk">SK · Slovenčina</option>
+        <option value="en">EN · English</option>
+        <option value="hu">HU · Magyar</option>
+        <option value="pl">PL · Polski</option>
+        <option value="de">DE · Deutsch</option>
+      </select>
+
+      <button
+        class="theme-toggle"
+        type="button"
+        data-theme-toggle
+        hidden
+      >
+        <span class="theme-icon" aria-hidden="true"></span>
+        <span class="theme-label">Automaticky</span>
+      </button>
+    </div>
+  </header>
+
+  <main id="content" class="container">
+    <section class="menu-hero">
+      <div>
+        <p class="eyebrow">
+          <span data-venue>MENU</span> · DONOVALY
+        </p>
+
+        <h1 data-copy="title">Na čo máš chuť?</h1>
+
+        <p data-copy="intro">
+          Vyber si z nášho menu a objednaj si pri bare. Potom už len vychutnávaj svoju chvíľu na Donovaloch.
+        </p>
+      </div>
+
+      <span class="hero-star" aria-hidden="true"></span>
+    </section>
+
+    <aside class="promo" data-promo hidden></aside>
+
+    <div class="menu-toolbar">
+      <label class="search-box">
+        <svg
+          class="icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.6"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <circle cx="10" cy="10" r="6"></circle>
+          <path d="m15 15 6 6"></path>
+        </svg>
+
+        <span class="sr-only" data-copy="search">
+          Vyhľadať jedlo alebo nápoj
+        </span>
+
+        <input
+          id="search"
+          type="search"
+          placeholder="Vyhľadať jedlo alebo nápoj…"
+          autocomplete="off"
+        >
+      </label>
+
+      <a
+        class="text-link"
+        href="menu-riders-bar-qr.pdf"
+        data-pdf
+        data-copy="pdf"
+      >
+        Pôvodné PDF
+      </a>
+    </div>
+
+    <fieldset id="price-controls" class="price-controls" hidden>
+      <legend class="sr-only" data-copy="pricing">
+        Zobrazenie cien
+      </legend>
+
+      <div class="price-options">
+        <button
+          class="price-option"
+          type="button"
+          data-price-mode="regular"
+          data-copy="regular"
+          aria-pressed="true"
+          aria-describedby="price-note"
+        >
+          Bežné ceny
+        </button>
+
+        <button
+          class="price-option"
+          type="button"
+          data-price-mode="season"
+          data-copy="seasonal"
+          aria-pressed="false"
+          aria-describedby="price-note"
+        >
+          So sezónkou −20 %
+        </button>
+      </div>
+
+      <p
+        id="price-note"
+        class="price-note"
+        role="status"
+        aria-live="polite"
+      ></p>
+    </fieldset>
+
+    <nav
+      id="categories"
+      class="categories"
+      aria-label="Kategórie menu"
+    ></nav>
+
+    <div class="results-heading">
+      <h2 id="category-title">Celé menu</h2>
+
+      <span
+        id="result-count"
+        class="muted"
+        role="status"
+        aria-live="polite"
+      ></span>
+    </div>
+
+    <div id="items"></div>
+
+    <section id="empty-state" class="empty-state" hidden>
+      <h3 id="empty-title"></h3>
+      <p id="empty-text"></p>
+
+      <button
+        id="clear-search"
+        class="primary-button"
+        type="button"
+        data-copy="clear"
+      >
+        Zobraziť celé menu
+      </button>
+
+      <a
+        class="text-link"
+        href="menu-riders-bar-qr.pdf"
+        data-pdf
+        data-copy="pdf"
+      >
+        Pôvodné PDF
+      </a>
+    </section>
+
+    <noscript>
+      <p>
+        Interaktívne menu potrebuje JavaScript.
+        <a href="menu-riders-bar-qr.pdf">Otvoriť PDF menu</a>.
+      </p>
+    </noscript>
+
+    <section class="information">
+      <details>
+        <summary data-copy="information">
+          Príplatky a informácie
+        </summary>
+        <dl id="notes"></dl>
+      </details>
+
+      <details>
+        <summary data-copy="allergens">Alergény</summary>
+        <ol id="allergen-list"></ol>
+      </details>
+
+      <p id="validity" class="muted"></p>
+    </section>
+
+    <section
+      id="review-banner"
+      class="review-banner"
+      aria-labelledby="review-title"
+      hidden
+    >
+      <div>
+        <p id="review-label" class="eyebrow">
+          TVOJA SKÚSENOSŤ · YETI BAR
+        </p>
+
+        <h2 id="review-title" data-copy="reviewTitle">
+          Chutilo ti u nás? Daj o tom vedieť!
+        </h2>
+
+        <p data-copy="reviewText">
+          Podeľ sa o svoju skúsenosť z návštevy.
+          Tvoja spätná väzba nám pomáha byť ešte lepší.
+          Ďakujeme!
+        </p>
+      </div>
+
+      <a
+        id="review-link"
+        class="review-button"
+        href="https://g.page/r/CdkmGKAW__LyEBM/review"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Napísať recenziu
+      </a>
+    </section>
+  </main>
+
+  <footer class="site-footer container">
+    <span class="venue-tag" data-venue>MENU</span>
+
+    <p data-credit>
+      © 2026 PARK SNOW Donovaly ·
+      Web vytvoril <strong>Timotej Kozaňák</strong>
+    </p>
+  </footer>
+</body>
+</html>

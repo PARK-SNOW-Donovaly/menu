@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+
+  <title>Na čo máš chuť? · PARK SNOW Donovaly</title>
+
+  <link rel="stylesheet" href="https://use.typekit.net/fjd7ksp.css">
+  <link rel="stylesheet" href="shared/style.css">
+
+  <script>
+    (() => {
+      const modes = ["system", "light", "dark"];
+      const media = window.matchMedia("(prefers-color-scheme: dark)");
+
+      let mode = "system";
+
+      try {
+        const saved = localStorage.getItem("yeti-theme");
+        if (modes.includes(saved)) mode = saved;
+      } catch {}
+
+      function applyTheme() {
+        const resolved = mode === "system"
+          ? (media.matches ? "dark" : "light")
+          : mode;
+
+        document.documentElement.dataset.theme = resolved;
+        document.documentElement.style.colorScheme = resolved;
+
+        const meta = document.querySelector('meta[name="theme-color"]');
+
+        if (meta) {
+          meta.content = resolved === "dark" ? "#071b2b" : "#ffffff";
+        }
+
+        const logo = document.getElementById("home-logo");
+
+        if (logo) {
+          const source = resolved === "dark"
+            ? "assets/parksnow-logo-dark.svg"
+            : "assets/parksnow-logo.svg";
+
+          if (logo.getAttribute("src") !== source) {
+            logo.src = source;
+          }
+        }
+
+        const button = document.getElementById("home-theme");
+        if (!button) return;
+
+        const labels = {
+          system: "Automaticky",
+          light: "Svetlý",
+          dark: "Tmavý"
+        };
+
+        const icons = {
+          system: "◐",
+          light: "☀",
+          dark: "☾"
+        };
+
+        const next = modes[(modes.indexOf(mode) + 1) % modes.length];
+
+        button.hidden = false;
+        button.querySelector(".theme-icon").textContent = icons[mode];
+        button.querySelector(".theme-label").textContent = labels[mode];
+
+        button.setAttribute(
+          "aria-label",
+          "Vzhľad: " + labels[mode] +
+          ". Prepnúť na: " + labels[next]
+        );
+      }
+
+      applyTheme();
+
+      media.addEventListener("change", () => {
+        if (mode === "system") applyTheme();
+      });
+
+      window.addEventListener("storage", event => {
+        if (event.key !== "yeti-theme" && event.key !== null) return;
+
+        mode = modes.includes(event.newValue)
+          ? event.newValue
+          : "system";
+
+        applyTheme();
+      });
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const logo = document.getElementById("home-logo");
+        const fallback = document.getElementById("home-brand-fallback");
+
+        function showLogo() {
+          logo.hidden = !logo.naturalWidth;
+          fallback.hidden = !!logo.naturalWidth;
+        }
+
+        logo.addEventListener("load", showLogo);
+        logo.addEventListener("error", () => {
+          logo.hidden = true;
+          fallback.hidden = false;
+        });
+
+        if (logo.complete) showLogo();
+
+        document.getElementById("home-theme")
+          .addEventListener("click", () => {
+            mode = modes[(modes.indexOf(mode) + 1) % modes.length];
+
+            try {
+              localStorage.setItem("yeti-theme", mode);
+            } catch {}
+
+            applyTheme();
+          });
+
+        document.getElementById("home-year").textContent =
+          new Date().getFullYear();
+
+        applyTheme();
+      });
+    })();
+  </script>
+
+  <style>
+    :root {
+      --heading: "neulis-cursive", "Space Grotesk", sans-serif;
+    }
+
+    body {
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .home-main {
+      flex: 1;
+      padding-bottom: 50px;
+    }
+
+    .home-hero {
+      position: relative;
+      overflow: hidden;
+      padding: clamp(30px, 6vw, 65px);
+      margin: 20px 0 36px;
+      border-radius: 30px;
+      background: var(--navy);
+      color: white;
+    }
+
+    .home-hero .eyebrow {
+      color: var(--cyan);
+    }
+
+    .home-hero h1 {
+      position: relative;
+      z-index: 1;
+      max-width: 760px;
+      margin: 22px 0;
+      font-size: clamp(44px, 7vw, 84px);
+      color: var(--cyan);
+    }
+
+    .home-hero-description {
+      position: relative;
+      z-index: 1;
+      max-width: 520px;
+      color: #e5f0f7;
+      font-size: 17px;
+    }
+
+    .home-star {
+      position: absolute;
+      right: 30px;
+      bottom: -60px;
+      font-size: 310px;
+      line-height: 1;
+      color: var(--cyan);
+      opacity: .13;
+      pointer-events: none;
+    }
+
+    .venues-heading {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .venues-heading h2 {
+      font-size: 30px;
+    }
+
+    .venues-heading p {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .venue-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .venue-card {
+      display: flex;
+      flex-direction: column;
+      min-height: 250px;
+      padding: 30px;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: var(--surface);
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .venue-card:hover {
+      border-color: var(--cyan);
+      background: var(--ice);
+    }
+
+    .venue-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      margin-bottom: 26px;
+    }
+
+    .venue-monogram {
+      display: grid;
+      place-items: center;
+      width: 60px;
+      height: 60px;
+      border-radius: 16px;
+      background: var(--navy);
+      color: var(--cyan);
+      font-family: var(--heading);
+      font-size: 34px;
+      font-weight: 700;
+    }
+
+    .venue-card .eyebrow {
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    .venue-card h3 {
+      font-family: var(--heading);
+      font-size: clamp(30px, 4vw, 42px);
+      font-weight: 700;
+      letter-spacing: -.035em;
+      line-height: 1.15;
+    }
+
+    .venue-card-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin-top: auto;
+      padding-top: 24px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .venue-card-arrow {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      background: var(--cyan);
+      color: var(--navy);
+      font-size: 24px;
+    }
+
+    .home-language-note {
+      margin-top: 25px;
+      color: var(--muted);
+      font-size: 12px;
+      text-align: center;
+    }
+
+    html[data-theme="dark"] .brand {
+      background: transparent;
+      padding: 0;
+    }
+
+    @media (max-width: 650px) {
+      .venue-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .home-hero {
+        margin-top: 10px;
+        padding: 32px 26px;
+        border-radius: 24px;
+      }
+
+      .home-hero-description {
+        font-size: 15px;
+      }
+
+      .home-star {
+        right: -25px;
+        bottom: -35px;
+        font-size: 230px;
+      }
+
+      .venues-heading {
+        display: block;
+      }
+
+      .venues-heading p {
+        margin-top: 7px;
+      }
+
+      .venue-card {
+        min-height: 220px;
+        padding: 25px;
+      }
+
+      .home-main {
+        padding-bottom: 35px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <a class="skip-link" href="#venues">
+    Prejsť na výber prevádzky
+  </a>
+
+  <header class="site-header container">
+    <a class="brand" href="./" aria-label="PARK SNOW Donovaly – úvod">
+      <img
+        id="home-logo"
+        src="assets/parksnow-logo.svg"
+        alt="PARK SNOW Donovaly"
+        hidden
+      >
+
+      <span id="home-brand-fallback" class="brand-fallback">
+        <small>PARK SNOW</small>
+        <strong>Donovaly</strong>
+      </span>
+    </a>
+
+    <div class="header-actions">
+      <span class="venue-tag">NAŠE MENU</span>
+
+      <button
+        id="home-theme"
+        class="theme-toggle"
+        type="button"
+        hidden
+      >
+        <span class="theme-icon" aria-hidden="true">◐</span>
+        <span class="theme-label">Automaticky</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="home-main container">
+    <section class="home-hero" aria-labelledby="home-title">
+      <p class="eyebrow">PARK SNOW DONOVALY · GASTRO</p>
+
+      <h1 id="home-title">Aj zážitky majú svoju chuť</h1>
+
+      <p class="home-hero-description">
+        Dobré jedlo, obľúbený drink alebo káva na chvíľu oddychu. Vyber si, kde sa zastavíš, a pozri si naše menu.
+      </p>
+
+      <span class="home-star" aria-hidden="true">
+  <svg
+    viewBox="0 0 100 100"
+    width="1em"
+    height="1em"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="5"
+    focusable="false"
+    style="display: block"
+  >
+    <path d="M50 4v92M4 50h92M17 17l66 66M17 83l66-66"/>
+  </svg>
+</span>
+
+    </section>
+
+    <section id="venues" aria-labelledby="venues-title">
+      <div class="venues-heading">
+        <h2 id="venues-title">Vyber si prevádzku</h2>
+        <p lang="en">Choose a venue to explore the menu.</p>
+      </div>
+
+      <div class="venue-grid">
+        <a class="venue-card" href="./yeti-bar/">
+          <div class="venue-card-top">
+            <span class="venue-monogram" aria-hidden="true">Y</span>
+            <span class="eyebrow">PARK SNOW DONOVALY</span>
+          </div>
+
+          <h3>Yeti Bar</h3>
+
+          <div class="venue-card-bottom">
+            <span>
+              Pozrieť menu
+              <span lang="en"> / View menu</span>
+            </span>
+            <span class="venue-card-arrow" aria-hidden="true">
+  <svg
+    viewBox="0 0 24 24"
+    width="24"
+    height="24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.6"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    focusable="false"
+  >
+    <path d="M5 19 19 5M5 5h14v14"/>
+  </svg>
+</span>
+          </div>
+        </a>
+
+        <a class="venue-card" href="./riders-bar/">
+          <div class="venue-card-top">
+            <span class="venue-monogram" aria-hidden="true">R</span>
+            <span class="eyebrow">PARK SNOW DONOVALY</span>
+          </div>
+
+          <h3>Riders Bar</h3>
+
+          <div class="venue-card-bottom">
+            <span>
+              Pozrieť menu
+              <span lang="en"> / View menu</span>
+            </span>
+            <span class="venue-card-arrow" aria-hidden="true">
+  <svg
+    viewBox="0 0 24 24"
+    width="24"
+    height="24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.6"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    focusable="false"
+  >
+    <path d="M5 19 19 5M5 5h14v14"/>
+  </svg>
+</span>
+          </div>
+        </a>
+
+      <a class="venue-card" href="./zahradiste-bistro/">
+          <div class="venue-card-top">
+            <span class="venue-monogram" aria-hidden="true">B</span>
+            <span class="eyebrow">PARK SNOW DONOVALY</span>
+          </div>
+
+          <h3>Bistro Záhradište</h3>
+
+          <div class="venue-card-bottom">
+            <span>
+              Pozrieť menu
+              <span lang="en"> / View menu</span>
+            </span>
+            <span class="venue-card-arrow" aria-hidden="true">
+  <svg
+    viewBox="0 0 24 24"
+    width="24"
+    height="24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.6"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    focusable="false"
+  >
+    <path d="M5 19 19 5M5 5h14v14"/>
+  </svg>
+</span>
+          </div>
+        </a>
+
+          <a class="venue-card" href="./husky-bar/">
+          <div class="venue-card-top">
+            <span class="venue-monogram" aria-hidden="true">H</span>
+            <span class="eyebrow">PARK SNOW DONOVALY</span>
+          </div>
+
+          <h3>Husky Bar</h3>
+
+          <div class="venue-card-bottom">
+            <span>
+              Pozrieť menu
+              <span lang="en"> / View menu</span>
+            </span>
+            <span class="venue-card-arrow" aria-hidden="true">
+  <svg
+    viewBox="0 0 24 24"
+    width="24"
+    height="24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.6"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    focusable="false"
+  >
+    <path d="M5 19 19 5M5 5h14v14"/>
+  </svg>
+</span>
+          </div>
+        </a>
+
+      <a class="venue-card" href="./magura-restauracia/">
+          <div class="venue-card-top">
+            <span class="venue-monogram" aria-hidden="true">M</span>
+            <span class="eyebrow">PARK SNOW DONOVALY</span>
+          </div>
+
+          <h3>Reštaurácia Magura</h3>
+
+          <div class="venue-card-bottom">
+            <span>
+              Pozrieť menu
+              <span lang="en"> / View menu</span>
+            </span>
+            <span class="venue-card-arrow" aria-hidden="true">
+  <svg
+    viewBox="0 0 24 24"
+    width="24"
+    height="24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.6"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    focusable="false"
+  >
+    <path d="M5 19 19 5M5 5h14v14"/>
+  </svg>
+</span>
+          </div>
+        </a>
+      </div>
+
+      <p class="home-language-note">
+        Slovenčina · English · Magyar · Polski · Deutsch
+      </p>
+    </section>
+  </main>
+
+  <footer class="site-footer container">
+
+    <p>
+      © <span id="home-year">2026</span> PARK SNOW Donovaly ·
+      Web vytvoril <strong>Timotej Kozaňák</strong>
+    </p>
+
+    <span>DOBRÚ CHUŤ!</span>
+  </footer>
+</body>
+</html>
