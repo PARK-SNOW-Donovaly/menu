@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+
+  <title>Prevádzkovateľ a súkromie · PARK SNOW Donovaly</title>
+
+  <link rel="stylesheet" href="https://use.typekit.net/fjd7ksp.css">
+  <link rel="stylesheet" href="shared/style.css">
+  <link rel="stylesheet" href="informacie.css">
+
+  <script>
+    (() => {
+      const modes = ["system", "light", "dark"];
+      const media = window.matchMedia("(prefers-color-scheme: dark)");
+
+      let mode = "system";
+
+      try {
+        const saved = localStorage.getItem("yeti-theme");
+
+        if (modes.includes(saved)) {
+          mode = saved;
+        }
+      } catch {}
+
+      const resolved = mode === "system"
+        ? (media.matches ? "dark" : "light")
+        : mode;
+
+      document.documentElement.dataset.theme = resolved;
+      document.documentElement.style.colorScheme = resolved;
+
+      const meta = document.querySelector(
+        'meta[name="theme-color"]'
+      );
+
+      if (meta) {
+        meta.content = resolved === "dark"
+          ? "#071b2b"
+          : "#ffffff";
+      }
+    })();
+  </script>
+</head>
+
+<script src="shared/layout.js"></script>
+
+<body>
+  <a class="skip-link" href="#content">
+    Prejsť na obsah
+  </a>
+
+  <header
+  data-site-header
+  data-venue="INFORMÁCIE"
+  ></header>
+
+  <main id="content" class="legal-main container">
+    <header class="legal-hero">
+      <p class="eyebrow">
+        PARK SNOW DONOVALY
+      </p>
+
+      <h1>
+        Prevádzkovateľ<br>
+        a súkromie
+      </h1>
+
+      <p>
+        Informácie o prevádzkovateľovi webu
+        a o jeho fungovaní.
+      </p>
+    </header>
+
+    <div class="legal-layout">
+      <nav
+        class="legal-nav"
+        aria-label="Obsah stránky"
+      >
+        <a href="#prevadzkovatel">
+          Prevádzkovateľ
+        </a>
+
+        <a href="#sukromie">
+          Ochrana súkromia
+        </a>
+
+        <a href="#nastavenia">
+          Nastavenia webu
+        </a>
+
+        <a href="#sluzby">
+          Externé služby
+        </a>
+
+        <a href="#kontakt">
+          Kontakt
+        </a>
+      </nav>
+
+      <div class="legal-content">
+        <section
+          id="prevadzkovatel"
+          class="legal-card"
+        >
+          <p class="eyebrow">
+            01 · PREVÁDZKOVATEĽ
+          </p>
+
+          <h2>Údaje spoločnosti</h2>
+
+          <dl class="company-details">
+            <div>
+              <dt>Obchodné meno</dt>
+              <dd>ICE BERG PROJECT s. r. o.</dd>
+            </div>
+
+            <div>
+              <dt>Sídlo</dt>
+              <dd>
+                Donovaly 801<br>
+                976 39 Donovaly<br>
+                Slovenská republika
+              </dd>
+            </div>
+
+            <div>
+              <dt>IČO</dt>
+              <dd>44 873 417</dd>
+            </div>
+
+            <div>
+              <dt>DIČ</dt>
+              <dd>2022856451</dd>
+            </div>
+
+            <div>
+              <dt>Obchodný register</dt>
+              <dd>
+                Okresný súd Banská Bystrica,
+                oddiel Sro, vložka č. 40120/S
+              </dd>
+            </div>
+          </dl>
+        </section>
+
+        <section
+          id="sukromie"
+          class="legal-card"
+        >
+          <p class="eyebrow">
+            02 · OCHRANA SÚKROMIA
+          </p>
+
+          <h2>Aké údaje web spracúva</h2>
+
+          <p>
+            Táto stránka slúži na zobrazovanie jedálnych
+            a nápojových lístkov. Neobsahuje používateľské
+            účty, kontaktný formulár, rezervácie ani platby
+            a od návštevníkov nevyžaduje osobné údaje.
+          </p>
+
+          <p>
+            Pri návšteve môžu byť z technických
+            a bezpečnostných dôvodov spracované bežné
+            prevádzkové údaje, napríklad IP adresa,
+            typ prehliadača, čas požiadavky a navštívená
+            adresa. Tieto údaje môže spracúvať poskytovateľ
+            hostingu GitHub Pages.
+          </p>
+        </section>
+
+        <section
+          id="nastavenia"
+          class="legal-card"
+        >
+          <p class="eyebrow">
+            03 · NASTAVENIA WEBU
+          </p>
+
+          <h2>Vzhľad a jazyk</h2>
+
+          <p>
+            Web si môže v lokálnom úložisku prehliadača
+            zapamätať zvolený svetlý, tmavý alebo automatický
+            vzhľad a preferovaný jazyk.
+          </p>
+
+          <p>
+            Tieto údaje slúžia iba na zachovanie nastavení
+            stránky. Nepoužívajú sa na sledovanie návštevníka
+            ani na zobrazovanie reklamy.
+          </p>
+
+          <p>
+            Uložené nastavenia môže návštevník kedykoľvek
+            odstrániť vymazaním údajov stránky vo svojom
+            prehliadači. Web nepoužíva analytické ani
+            reklamné cookies.
+          </p>
+        </section>
+
+        <section
+          id="sluzby"
+          class="legal-card"
+        >
+          <p class="eyebrow">
+            04 · EXTERNÉ SLUŽBY
+          </p>
+
+          <h2>Hosting a písma</h2>
+
+          <p>
+            Stránka je poskytovaná prostredníctvom služby
+            GitHub Pages.
+          </p>
+
+          <p>
+            Pri načítaní externých písiem môže prehliadač
+            nadviazať spojenie so službami Adobe Fonts alebo
+            Google Fonts. Na tieto služby sa vzťahujú ich
+            vlastné pravidlá ochrany súkromia.
+          </p>
+
+          <div class="legal-links">
+            <a
+              href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Ochrana súkromia GitHub ↗
+            </a>
+
+            <a
+              href="https://www.adobe.com/privacy/policy.html"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Ochrana súkromia Adobe ↗
+            </a>
+
+            <a
+              href="https://policies.google.com/privacy"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Ochrana súkromia Google ↗
+            </a>
+          </div>
+        </section>
+
+        <section
+          id="kontakt"
+          class="legal-card"
+        >
+          <p class="eyebrow">
+            05 · KONTAKT
+          </p>
+
+          <h2>Kontakt na prevádzkovateľa</h2>
+
+          <p>
+            V prípade otázok týkajúcich sa tejto stránky
+            alebo ochrany osobných údajov kontaktujte
+            prevádzkovateľa.
+          </p>
+
+          <dl class="company-details contact-details">
+            <div>
+              <dt>E-mail</dt>
+
+              <dd>
+                <a href="mailto:info@parksnow.sk">
+                  info@parksnow.sk
+                </a>
+              </dd>
+            </div>
+
+            <div>
+              <dt>Telefón</dt>
+              <dd>+421 48 4199 881</dd>
+            </div>
+          </dl>
+        </section>
+
+        <p class="legal-updated">
+          Posledná aktualizácia: 11. októbra 2026
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <footer
+  data-site-footer
+  data-venue="INFORMÁCIE"
+></footer>
+</body>
+</html>

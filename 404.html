@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+
+  <title>Stránka sa nenašla · PARK SNOW Donovaly</title>
+
+  <link
+    rel="stylesheet"
+    href="https://use.typekit.net/fjd7ksp.css"
+  >
+
+  <link id="shared-style" rel="stylesheet">
+  <link id="page-style" rel="stylesheet">
+
+  <script>
+    (() => {
+      "use strict";
+
+      /*
+       * GitHub Pages:
+       * https://pouzivatel.github.io/menu/
+       */
+      const projectRoot = "/menu/";
+
+      const siteRoot = location.pathname.startsWith(projectRoot)
+        ? projectRoot
+        : "/";
+
+      window.PARKSNOW_SITE_ROOT = siteRoot;
+
+      document.getElementById("shared-style").href =
+        siteRoot + "shared/style.css";
+
+      document.getElementById("page-style").href =
+        siteRoot + "404.css";
+
+      const modes = ["system", "light", "dark"];
+      const media = window.matchMedia(
+        "(prefers-color-scheme: dark)"
+      );
+
+      const labels = {
+        system: "Automaticky",
+        light: "Svetlý",
+        dark: "Tmavý"
+      };
+
+      /*
+       * Všetky ikony sú SVG.
+       * Mobil ich nevykreslí ako emoji.
+       */
+      const icons = {
+        system: `
+          <svg
+            class="icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            focusable="false"
+            aria-hidden="true"
+          >
+            <circle cx="12" cy="12" r="8"></circle>
+            <path
+              d="M12 4a8 8 0 0 0 0 16Z"
+              fill="currentColor"
+              stroke="none"
+            ></path>
+          </svg>
+        `,
+
+        light: `
+          <svg
+            class="icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            focusable="false"
+            aria-hidden="true"
+          >
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2"></path>
+            <path d="M12 20v2"></path>
+            <path d="M4.93 4.93l1.41 1.41"></path>
+            <path d="M17.66 17.66l1.41 1.41"></path>
+            <path d="M2 12h2"></path>
+            <path d="M20 12h2"></path>
+            <path d="M4.93 19.07l1.41-1.41"></path>
+            <path d="M17.66 6.34l1.41-1.41"></path>
+          </svg>
+        `,
+
+        dark: `
+          <svg
+            class="icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            focusable="false"
+            aria-hidden="true"
+          >
+            <path
+              d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5
+                 8.5 8.5 0 1 0 20.5 14.2Z"
+            ></path>
+          </svg>
+        `
+      };
+
+      function readMode() {
+        try {
+          const saved = localStorage.getItem("yeti-theme");
+
+          if (modes.includes(saved)) {
+            return saved;
+          }
+        } catch {}
+
+        return "system";
+      }
+
+      let mode = readMode();
+
+      function getResolvedMode() {
+        if (mode === "system") {
+          return media.matches ? "dark" : "light";
+        }
+
+        return mode;
+      }
+
+      function applyDocumentTheme() {
+        const resolved = getResolvedMode();
+        const html = document.documentElement;
+
+        html.dataset.theme = resolved;
+        html.style.colorScheme = resolved;
+
+        const meta = document.querySelector(
+          'meta[name="theme-color"]'
+        );
+
+        if (meta) {
+          meta.content = resolved === "dark"
+            ? "#071b2b"
+            : "#ffffff";
+        }
+
+        return resolved;
+      }
+
+      /*
+       * Téma sa nastaví ešte pred vykreslením obsahu.
+       */
+      applyDocumentTheme();
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const root =
+          window.PARKSNOW_SITE_ROOT || "/";
+
+        const brandLink =
+          document.getElementById("brand-link");
+
+        const homeLink =
+          document.getElementById("home-link");
+
+        const logo =
+          document.querySelector("[data-logo]");
+
+        const fallback =
+          document.querySelector(".brand-fallback");
+
+        const themeButton =
+          document.querySelector("[data-theme-toggle]");
+
+        const themeIcon =
+          themeButton.querySelector(".theme-icon");
+
+        const themeLabel =
+          themeButton.querySelector(".theme-label");
+
+        const year =
+          document.getElementById("home-year");
+
+        brandLink.href = root;
+        homeLink.href = root;
+
+        function showLogo() {
+          const loaded = Boolean(logo.naturalWidth);
+
+          logo.hidden = !loaded;
+          fallback.hidden = loaded;
+        }
+
+        logo.addEventListener("load", showLogo);
+
+        logo.addEventListener("error", () => {
+          logo.hidden = true;
+          fallback.hidden = false;
+        });
+
+        function applyTheme() {
+          const resolved = applyDocumentTheme();
+
+          const logoSource = resolved === "dark"
+            ? root + "assets/parksnow-logo-dark.svg"
+            : root + "assets/parksnow-logo.svg";
+
+          if (logo.getAttribute("src") !== logoSource) {
+            logo.src = logoSource;
+          }
+
+          const next =
+            modes[(modes.indexOf(mode) + 1) % modes.length];
+
+          themeIcon.innerHTML = icons[mode];
+          themeLabel.textContent = labels[mode];
+
+          themeButton.setAttribute(
+            "aria-label",
+            "Vzhľad: " + labels[mode] +
+            ". Prepnúť na: " + labels[next]
+          );
+
+          themeButton.hidden = false;
+
+          if (logo.complete) {
+            showLogo();
+          }
+        }
+
+        themeButton.addEventListener("click", () => {
+          mode =
+            modes[(modes.indexOf(mode) + 1) % modes.length];
+
+          try {
+            localStorage.setItem("yeti-theme", mode);
+          } catch {}
+
+          applyTheme();
+        });
+
+        media.addEventListener("change", () => {
+          if (mode === "system") {
+            applyTheme();
+          }
+        });
+
+        window.addEventListener("storage", event => {
+          if (
+            event.key !== "yeti-theme" &&
+            event.key !== null
+          ) {
+            return;
+          }
+
+          mode = modes.includes(event.newValue)
+            ? event.newValue
+            : "system";
+
+          applyTheme();
+        });
+
+        if (year) {
+          year.textContent = new Date().getFullYear();
+        }
+
+        applyTheme();
+      });
+    })();
+  </script>
+</head>
+
+<script src="shared/layout.js"></script>
+
+<body data-page="404">
+  <a class="skip-link" href="#content">
+    Prejsť na obsah
+  </a>
+
+  <header
+  data-site-header
+  data-venue="CHYBA 404"
+  ></header>
+
+  <main id="content" class="page-main container">
+    <section
+      class="error-panel"
+      aria-labelledby="error-title"
+    >
+      <div class="error-copy">
+        <p class="eyebrow">
+          PARK SNOW DONOVALY · CHYBA 404
+        </p>
+
+        <h1 id="error-title">
+          Toto menu sme nenašli.
+        </h1>
+
+        <p class="error-description">
+          Odkaz už nemusí byť platný alebo bola adresa
+          napísaná nesprávne.
+        </p>
+
+        <div class="error-actions">
+          <a
+            id="home-link"
+            class="primary-link"
+            href="/"
+          >
+            Späť na výber prevádzky
+
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M5 12h14"></path>
+              <path d="m13 6 6 6-6 6"></path>
+            </svg>
+          </a>
+
+          <a
+            class="secondary-link"
+            href="https://parksnow.sk"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            parksnow.sk
+
+            <svg
+              class="icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M5 19 19 5"></path>
+              <path d="M5 5h14v14"></path>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <div
+        class="error-visual"
+        aria-hidden="true"
+      >
+        <span class="error-number">
+          404
+        </span>
+      </div>
+    </section>
+  </main>
+
+  <footer
+  data-site-footer
+  data-venue="CHYBA 404"
+  ></footer>
+</body>
+</html>
